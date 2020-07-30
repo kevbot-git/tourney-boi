@@ -1,0 +1,68 @@
+service: tourney-boi
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  profile: default
+  stage: ${opt:stage, 'local'}
+  region: ${self:custom.regions.${self:custom.stage}}
+
+  environment: ${file(.env.local.yml)}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Resource: arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/challenges
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+
+custom:
+  stage: "${self:provider.stage}"
+  regions:
+    local: ap-southeast-2
+    dev: ap-southeast-2
+
+functions:
+  events:
+    handler: handler.events
+    events:
+      - http:
+          path: events
+          method: post
+  interactions:
+    handler: handler.interactions
+    events:
+      - http:
+          path: interactions
+          method: post
+
+resources:
+  Resources:
+    challengesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: challenges
+        AttributeDefinitions:
+          - AttributeName: channelId
+            AttributeType: S
+          - AttributeName: challengerId
+            AttributeType: S
+          # - AttributeName: challengeeId
+          #   AttributeType: S
+          # - AttributeName: accepterId
+          #   AttributeType: S
+        KeySchema:
+          - AttributeName: channelId
+            KeyType: HASH
+          - AttributeName: challengerId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

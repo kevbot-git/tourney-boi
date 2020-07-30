@@ -1,0 +1,22 @@
+{
+  "name": "tourney-boi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "serve": "sls offline start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Menhinick <kamenhinick@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@slack/web-api": "^5.10.0",
+    "aws-sdk": "^2.696.0",
+    "crypto": "^1.0.1",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-node": "^11.1.0",
+    "serverless-offline": "^6.4.0"
+  }
+}
