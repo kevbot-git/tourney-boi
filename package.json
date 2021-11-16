@@ -11,7 +11,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@slack/web-api": "^5.10.0",
-    "aws-sdk": "^2.696.0",
+    "aws-sdk": "^2.814.0",
     "crypto": "^1.0.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
